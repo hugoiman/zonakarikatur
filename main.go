@@ -40,7 +40,7 @@ func main() {
 
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	router.PathPrefix("/assets2/").Handler(http.StripPrefix("/assets2/", http.FileServer(http.Dir("assets2"))))
-	router.PathPrefix("/node_modules/").Handler(http.StripPrefix("/node_modules/", http.FileServer(http.Dir("node_modules"))))
+	router.PathPrefix("/node_modules/").Handler(http.StripPrefix("/node_modules/", http.FileServer(http.Dir("node_modules2"))))
 
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
