@@ -13,7 +13,6 @@
 *~
 
 # Folders to ignore
-/node_modules/
 /dist/node_modules/
 /pages/layouts/
 /pages/
@@ -36,3 +35,4 @@ Thumbs.db
 # Komodo
 .komodotools
 *.komodoproject
+node_modules
