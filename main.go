@@ -182,6 +182,19 @@ func main() {
 		}
 	})
 
+	router.HandleFunc("/admin/testimony", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/testimony.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
 	router.HandleFunc("/admin/create-testimony", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
 			"./pkg/views/admin/testimony-create.html",
