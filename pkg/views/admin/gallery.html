@@ -23,6 +23,10 @@
     />
 
     <!-- CSS Libraries -->
+    <link
+      rel="stylesheet"
+      href="/node_modules/chocolat/dist/css/chocolat.css"
+    />
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -47,7 +51,28 @@
               </div>
             </div>
 
-            <div class="section-body"></div>
+            <div class="section-body gallery">
+              <div class="form-group row mb-4">
+                <div class="col-sm-12 col-md-3">
+                  <select
+                    class="form-control selectric"
+                    id="selectBox"
+                    onchange="changeCategory();"
+                  >
+                    <option value="1">Semua</option>
+                    <option value="2">Karikatur Full Body</option>
+                    <option value="3">Karikatur Half Body</option>
+                    <option value="4">Ilustasi Wajah</option>
+                    <option value="5">Mozaik</option>
+                    <option value="6">Sketsa Digital</option>
+                    <option value="7">Vexel Art</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row" id="galleries"></div>
+              <div style="height: 170px;"></div>
+            </div>
+            <div id="image-loader"></div>
           </section>
         </div>
         {{template "_footer" .}}
@@ -75,11 +100,124 @@
     <script src="/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="/node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+    <!-- Script -->
+    <script>
+      var state = "";
+      function changeCategory() {
+        var selectBox = document.getElementById("selectBox");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        switch (selectedValue) {
+          case "1":
+            semua();
+            break;
+          case "2":
+            fullbody();
+            break;
+          case "3":
+            halfbody();
+            break;
+          case "4":
+            ilustrasi();
+            break;
+          case "5":
+            mozaik();
+            break;
+          case "6":
+            sketsa();
+            break;
+          case "7":
+            vexel();
+            break;
+        }
+      }
+      function semua() {
+        $(".all").show();
+        state = "all";
+      }
+      function fullbody() {
+        // $("#btn_karikatur").addClass("active");
+        $(".all").hide();
+        $(".karikatur-full-body").show();
+        state = "full";
+      }
+      function halfbody() {
+        // $("#btn_karikatur").addClass("active");
+        $(".all").hide();
+        $(".karikatur-half-body").show();
+        state = "half";
+      }
+      function mozaik() {
+        $(".all").hide();
+        $(".mozaik").show();
+        state = "mozaik";
+      }
+      function sketsa() {
+        $(".all").hide();
+        $(".sketsa").show();
+        state = "sketsa";
+      }
+      function vexel() {
+        $(".all").hide();
+        $(".vexel").show();
+        state = "vexel";
+      }
+      function ilustrasi() {
+        $(".all").hide();
+        $(".ilustrasi-wajah").show();
+        state = "ilustrasi";
+      }
+
+      $(document).ready(function () {
+        loadGallery();
+        $(window).scroll(function () {
+          function elementScrolled(elem) {
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+            var elemTop = $(elem).offset().top;
+            return elemTop <= docViewBottom && elemTop >= docViewTop;
+          }
+          if (elementScrolled("#image-loader")) {
+            loadGallery();
+            switch (state) {
+              case "full":
+                fullbody();
+                break;
+              case "half":
+                halfbody();
+                break;
+              case "mozaik":
+                mozaik();
+                break;
+              case "vexel":
+                vexel();
+                break;
+              case "sketsa":
+                sketsa();
+                break;
+              case "ilustrasi":
+                ilustrasi();
+                break;
+              default:
+                semua();
+            }
+          }
+        });
+      });
+    </script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+
+    <!-- Add JS -->
+    <script src="/assets2/js-view/indexAdmin.js"></script>
+    <script src="/assets2/js-view/gallery.js"></script>
   </body>
 </html>

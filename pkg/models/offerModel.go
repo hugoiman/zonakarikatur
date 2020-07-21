@@ -42,6 +42,23 @@ func GetOffers() Offers {
 	return offers
 }
 
+// GetOffer is func
+func GetOffer(idOffer string) (Offer, error) {
+	con := db.Connect()
+	query := "SELECT idOffer, title, image, createdAt FROM offer WHERE idOffer = ?"
+
+	offer := Offer{}
+	var createdAt time.Time
+
+	err := con.QueryRow(query, idOffer).Scan(
+		&offer.IDOffer, &offer.Title, &offer.Image, &createdAt)
+
+	offer.CreatedAt = createdAt.Format("02 Jan 2006")
+
+	defer con.Close()
+	return offer, err
+}
+
 // CreateOffer is func
 func CreateOffer(data Offer) error {
 	con := db.Connect()

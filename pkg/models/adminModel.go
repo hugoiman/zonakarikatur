@@ -5,23 +5,34 @@ import "zonakarikatur/db"
 // Admin is class
 type Admin struct {
 	IDAdmin  int    `json:"idAdmin"`
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
+	Name     string `json:"name" validate:"required"`
+	Username string `json:"username" validate:"required,min=3,max=10"`
+	Email    string `json:"email" validate:"required,email"`
 }
 
-// GetAdmin is function
-func GetAdmin(idAdmin string) Admin {
+// GetAdmin is functio
+func GetAdmin(id string) Admin {
 	con := db.Connect()
-	query := "SELECT idAdmin, name, username, email FROM admin where idAdmin = ?"
+	query := "SELECT idAdmin, name, username, email FROM admin WHERE idAdmin = ? OR email = ?"
 
 	admin := Admin{}
-	_ = con.QueryRow(query, idAdmin).Scan(
+	_ = con.QueryRow(query, id, id).Scan(
 		&admin.IDAdmin, &admin.Name, &admin.Username, &admin.Email)
 
 	defer con.Close()
 
 	return admin
+}
+
+// UpdateAdmin is func
+func UpdateAdmin(admin Admin) error {
+	con := db.Connect()
+	query := "UPDATE admin SET name = ?, username = ?, email = ? WHERE idAdmin = ?"
+	_, err := con.Exec(query, admin.Name, admin.Username, admin.Email, admin.IDAdmin)
+
+	defer con.Close()
+
+	return err
 }
 
 // CheckOldPassword is Auth User

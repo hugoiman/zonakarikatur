@@ -22,7 +22,8 @@
           class="rounded-circle mr-1"
         />
         <div class="d-sm-none d-lg-inline-block">
-          Hi, Ujang Maman
+          Hi,
+          <span class="name"></span>
         </div>
       </a>
       <div class="dropdown-menu dropdown-menu-right">
@@ -35,7 +36,11 @@
           Password
         </a>
         <div class="dropdown-divider"></div>
-        <a href="/login" class="dropdown-item has-icon text-danger">
+        <a
+          href="#"
+          onclick="logout()"
+          class="dropdown-item has-icon text-danger"
+        >
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>

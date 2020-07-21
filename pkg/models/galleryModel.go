@@ -45,6 +45,23 @@ func GetGalleries(limit, offset int) Galleries {
 	return galleries
 }
 
+// GetGallery is func
+func GetGallery(idGallery string) (Gallery, error) {
+	con := db.Connect()
+	query := "SELECT idGallery, category, image, createdAt FROM gallery WHERE idGallery = ?"
+
+	gallery := Gallery{}
+	var createdAt time.Time
+
+	err := con.QueryRow(query, idGallery).Scan(
+		&gallery.IDGallery, &gallery.Category, &gallery.Image, &createdAt)
+
+	gallery.CreatedAt = createdAt.Format("02 Jan 2006")
+
+	defer con.Close()
+	return gallery, err
+}
+
 // CreateGallery is func
 func CreateGallery(data Gallery) error {
 	con := db.Connect()

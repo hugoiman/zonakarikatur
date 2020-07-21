@@ -42,6 +42,23 @@ func GetTestimonies(limit, offset int) Testimonies {
 	return testimonies
 }
 
+// GetTestimony is func
+func GetTestimony(idTestimony string) (Testimony, error) {
+	con := db.Connect()
+	query := "SELECT idTestimony, image, createdAt FROM testimony WHERE idTestimony = ?"
+
+	testimony := Testimony{}
+	var createdAt time.Time
+
+	err := con.QueryRow(query, idTestimony).Scan(
+		&testimony.IDTestimony, &testimony.Image, &createdAt)
+
+	testimony.CreatedAt = createdAt.Format("02 Jan 2006")
+
+	defer con.Close()
+	return testimony, err
+}
+
 // CreateTestimony is func
 func CreateTestimony(data Testimony) error {
 	con := db.Connect()

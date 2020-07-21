@@ -21,8 +21,14 @@ func main() {
 	auth := router.PathPrefix("").Subrouter()
 	auth.Use(mw.AuthToken)
 
+	auth.HandleFunc("/api/auth", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Verified"))
+	}).Methods("GET")
 	router.HandleFunc("/api/loginAdmin", controllers.LoginAdmin).Methods("POST")
 	// router.HandleFunc("/api/logout", controllers.Logout).Methods("GET")
+
+	auth.HandleFunc("/api/admin", controllers.GetAdmin).Methods("GET")
+	auth.HandleFunc("/api/admin", controllers.UpdateAdmin).Methods("PUT")
 
 	router.HandleFunc("/api/gallery", controllers.GetGalleries).Methods("GET")
 	auth.HandleFunc("/api/gallery", controllers.CreateGallery).Methods("POST")
@@ -35,8 +41,10 @@ func main() {
 	router.HandleFunc("/api/offer", controllers.GetOffers).Methods("GET")
 	auth.HandleFunc("/api/offer", controllers.CreateOffer).Methods("POST")
 	auth.HandleFunc("/api/offer/{idOffer}", controllers.DeleteOffer).Methods("DELETE")
+	auth.HandleFunc("/api/offer-file", controllers.UploadFileOffer).Methods("POST")
 
-	auth.HandleFunc("/api/password", controllers.ChangePassword).Methods("PUT")
+	auth.HandleFunc("/api/password", controllers.ChangePassword).Methods("POST")
+	router.HandleFunc("/api/password", controllers.ForgotPassword).Methods("PUT")
 
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	router.PathPrefix("/assets2/").Handler(http.StripPrefix("/assets2/", http.FileServer(http.Dir("assets2"))))

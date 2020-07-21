@@ -54,35 +54,49 @@
                     <div class="card-header">
                       <h4>Write Your Post</h4>
                     </div>
-                    <div class="card-body">
-                      <div class="form-group row mb-4">
-                        <label
-                          class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                          >Title</label
-                        >
-                        <div class="col-sm-12 col-md-7">
-                          <input type="text" class="form-control" />
+                    <form id="form" action="">
+                      <div class="card-body">
+                        <div class="form-group row mb-4">
+                          <label
+                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                            >Title</label
+                          >
+                          <div class="col-sm-12 col-md-7">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="title"
+                              name="title"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div class="form-group row mb-4">
-                        <label
-                          class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                          >File</label
-                        >
-                        <div class="col-sm-12 col-md-7">
-                          <input type="file" class="form-control" />
+                        <div class="form-group row mb-4">
+                          <label
+                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                            >File</label
+                          >
+                          <div class="col-sm-12 col-md-7">
+                            <input
+                              type="file"
+                              class="form-control"
+                              id="image"
+                              name="image"
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div class="form-group row mb-4">
-                        <label
-                          class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                        ></label>
-                        <div class="col-sm-12 col-md-7">
-                          <button class="btn btn-primary">Create Post</button>
+                        <div class="form-group row mb-4">
+                          <label
+                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                          ></label>
+                          <div class="col-sm-12 col-md-7">
+                            <button type="submit" class="btn btn-primary">
+                              Create Post
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -99,6 +113,7 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -114,11 +129,63 @@
     <script src="/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script
+      type="text/javascript"
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/additional-methods.js"
+    ></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+
+    <!-- Add JS -->
+    <script src="/assets2/js-view/indexAdmin.js"></script>
+    <script src="/assets2/js-view/offer-create.js"></script>
+
+    <!-- Script -->
+    <script>
+      $.validator.addMethod(
+        "filesize",
+        function (value, element, param) {
+          return this.optional(element) || element.files[0].size <= param;
+        },
+        "File size must be less than 2 MB"
+      );
+
+      $("#form").validate({
+        rules: {
+          image: {
+            required: true,
+            extension: "jpg|jpeg",
+            filesize: 2000000,
+          },
+          title: {
+            required: true,
+          },
+        },
+        messages: {
+          // <-- you must declare messages inside of "messages" option
+          image: {
+            required: "Silahkan mengisi bidang ini",
+            extension: "Format yang diizinkan jpg dan jpeg",
+          },
+          title: {
+            required: "Silahkan mengisi bidang ini",
+          },
+        },
+        submitHandler: function (form) {
+          uploadFile();
+        },
+      });
+    </script>
   </body>
 </html>

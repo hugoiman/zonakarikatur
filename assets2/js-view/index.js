@@ -141,9 +141,9 @@ function loadTestimony() {
       });
       $.each(resp.testimonies, function (idx, value) {
         content +=
-          '<div class="col-md-2 col-4 site-animate"><a href="/assets2/images/testimoni/' +
+          '<div class="col-md-2 col-4 site-animate"><a href="/assets2/images/testimony/' +
           value.image +
-          '" class="site-thumbnail image-popup"><img src="/assets2/images/testimoni/' +
+          '" class="site-thumbnail image-popup"><img src="/assets2/images/testimony/' +
           value.image +
           '" class="img-fluid"></a></div>';
       });

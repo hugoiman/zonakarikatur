@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"crypto/sha1"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"time"
 	mw "zonakarikatur/middleware"
@@ -11,6 +13,7 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"gopkg.in/go-playground/validator.v9"
+	"gopkg.in/gomail.v2"
 )
 
 // MySigningKey is signature
@@ -60,7 +63,7 @@ func CreateToken(admin models.Admin) string {
 		IDAdmin:  admin.IDAdmin,
 		Username: admin.Username,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 24 * 7).Unix(),
 		},
 	}
 
@@ -85,3 +88,73 @@ func CreateToken(admin models.Admin) string {
 // 	w.Write([]byte(`{"message":"Anda telah logout"}`))
 // 	return
 // }
+
+// ForgotPassword is func
+func ForgotPassword(w http.ResponseWriter, r *http.Request) {
+	var data map[string]interface{}
+	json.NewDecoder(r.Body).Decode(&data)
+
+	email := fmt.Sprintf("%v", data["email"])
+
+	if err := validator.New().Var(email, "required,email"); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	admin := models.GetAdmin(email)
+	if admin.Name == "" {
+		http.Error(w, "User tidak ditemukan", http.StatusBadRequest)
+		return
+	}
+
+	// Generate Random String
+	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+	randomStr := make([]rune, 10)
+	for i := range randomStr {
+		randomStr[i] = letters[rand.Intn(len(letters))]
+	}
+	newPass := string(randomStr)
+
+	var pass = sha1.New()
+	pass.Write([]byte(newPass))
+	var encryptedPass = fmt.Sprintf("%x", pass.Sum(nil))
+
+	fmt.Println(encryptedPass)
+
+	// models.UpdatePassword(admin.IDAdmin, encryptedPass)
+	// message := "Hello, your new password is <b>" + newPass + "</b>"
+	// err := SendEmail("New Password", email, message)
+	// if err != nil {
+	// 	http.Error(w, "Gagal! ", http.StatusBadRequest)
+	// 	return
+	// }
+
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"message":"Password baru telah dikirim ke email anda."}`))
+}
+
+// SendEmail is func
+func SendEmail(subject string, to string, message string) error {
+	var configSMTPHost = "smtp.gmail.com"
+	var configSMTPPort = 587
+	var configEmail = "nanonymoux@gmail.com"
+	var configPassword = "kudaponi10"
+	// var configPassword = os.Getenv("PASS_EMAIL")
+
+	mailer := gomail.NewMessage()
+
+	mailer.SetHeader("From", configEmail)
+	mailer.SetHeader("To", to)
+	mailer.SetHeader("Subject", subject)
+	mailer.SetBody("text/html", message)
+
+	dialer := gomail.NewDialer(configSMTPHost, configSMTPPort, configEmail, configPassword)
+	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+
+	err := dialer.DialAndSend(mailer)
+
+	return err
+
+}

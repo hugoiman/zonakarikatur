@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -59,11 +60,19 @@ func DeleteGallery(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idGallery := vars["idGallery"]
 
-	err := models.DeleteGallery(idGallery)
+	offer, err := models.GetGallery(idGallery)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	err = models.DeleteGallery(idGallery)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	path := "assets2/images/gallery/" + offer.Image
+	_ = os.Remove(path)
 
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)

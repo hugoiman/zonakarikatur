@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -59,13 +60,21 @@ func DeleteTestimony(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idTestimony := vars["idTestimony"]
 
-	err := models.DeleteTestimony(idTestimony)
+	testimony, err := models.GetTestimony(idTestimony)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	err = models.DeleteTestimony(idTestimony)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	path := "assets2/images/gallery/" + testimony.Image
+	_ = os.Remove(path)
+
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message":"Testimony telah dihapus!"}`))
+	w.Write([]byte(`{"message":"Gambar telah dihapus!"}`))
 }

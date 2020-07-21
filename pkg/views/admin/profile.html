@@ -46,7 +46,7 @@
               <div class="row">
                 <div class="col-12">
                   <div class="card">
-                    <form method="post" class="needs-validation" novalidate="">
+                    <form id="form" class="needs-validation" novalidate="">
                       <div class="card-header">
                         <h4>Edit Profile</h4>
                       </div>
@@ -58,12 +58,12 @@
                             >
                             <input
                               type="text"
-                              class="form-control"
-                              value="Ujang"
+                              class="form-control name"
+                              id="name"
                               required=""
                             />
                             <div class="invalid-feedback">
-                              Please fill in the first name
+                              Please fill in the name
                             </div>
                           </div>
                           <div class="form-group col-md-6 col-12">
@@ -72,8 +72,8 @@
                             >
                             <input
                               type="text"
-                              class="form-control"
-                              value="Maman"
+                              class="form-control username"
+                              id="username"
                               required=""
                             />
                             <div class="invalid-feedback">
@@ -88,8 +88,8 @@
                             >
                             <input
                               type="email"
-                              class="form-control"
-                              value="ujang@maman.com"
+                              class="form-control email"
+                              id="email"
                               required=""
                             />
                             <div class="invalid-feedback">
@@ -133,11 +133,47 @@
     <script src="/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+
+    <!-- Add JS -->
+    <script src="/assets2/js-view/indexAdmin.js"></script>
+
+    <!-- Script -->
+    <script>
+      $("#form").submit(function (e) {
+        e.preventDefault();
+
+        var name = $("#name").val();
+        var username = $("#username").val();
+        var email = $("#email").val();
+        var jsonData = JSON.stringify({
+          name,
+          username,
+          email,
+        });
+
+        $.ajax({
+          url: domain + "/api/admin",
+          type: "PUT",
+          headers: { Authorization: "Bearer " + token },
+          data: jsonData,
+          contentType: "application/json",
+          success: function (resp) {
+            Swal.fire("Updated!", "Profil telah diperbarui.", "success");
+          },
+          error: function (error) {
+            failedAlert(error.responseText);
+          },
+        });
+      });
+    </script>
   </body>
 </html>

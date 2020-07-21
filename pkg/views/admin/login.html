@@ -25,7 +25,7 @@
     <!-- CSS Libraries -->
     <link
       rel="stylesheet"
-      href="/node_modules/bootstrap-social/bootstrap-social.css"
+      href="/node_modules/izitoast/dist/css/iziToast.min.css"
     />
 
     <!-- Template CSS -->
@@ -45,15 +45,11 @@
                 <div class="card-header"><h4>Login</h4></div>
 
                 <div class="card-body">
-                  <form
-                    method="POST"
-                    action="#"
-                    class="needs-validation"
-                    novalidate=""
-                  >
+                  <form id="form" class="needs-validation" novalidate="">
                     <div class="form-group">
-                      <label for="email">Username</label>
+                      <label for="text">Username</label>
                       <input
+                        id="username"
                         type="text"
                         class="form-control"
                         name="uname"
@@ -87,21 +83,6 @@
                       />
                       <div class="invalid-feedback">
                         please fill in your password
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          name="remember"
-                          class="custom-control-input"
-                          tabindex="3"
-                          id="remember-me"
-                        />
-                        <label class="custom-control-label" for="remember-me"
-                          >Remember Me</label
-                        >
                       </div>
                     </div>
 
@@ -147,11 +128,62 @@
     <script src="/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="/node_modules/izitoast/dist/js/iziToast.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+
+    <!-- Script -->
+
+    <script>
+      var domain = "https://zonakarikatur.herokuapp.com";
+      // var domain = "http://localhost:8080";
+      $(document).ready(function () {
+        var token = Cookies.get("token");
+        $.ajax({
+          url: domain + "/api/auth",
+          type: "GET",
+          headers: { Authorization: "Bearer " + token },
+          contentType: "application/json",
+          success: function (resp) {
+            window.location.href = "/admin/dashboard";
+          },
+          error: function (error) {},
+        });
+      });
+
+      $("#form").submit(function (e) {
+        e.preventDefault();
+
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var jsonData = JSON.stringify({
+          username,
+          password,
+        });
+
+        $.ajax({
+          url: domain + "/api/loginAdmin",
+          type: "POST",
+          data: jsonData,
+          contentType: "application/json",
+          success: function (resp) {
+            Cookies.set("token", resp.token, { expires: 7, path: "/" });
+            window.location.href = "/admin/dashboard";
+          },
+          error: function (error) {
+            iziToast.error({
+              title: "Failed!",
+              message: error.responseText,
+              position: "topCenter",
+            });
+          },
+        });
+      });
+    </script>
   </body>
 </html>

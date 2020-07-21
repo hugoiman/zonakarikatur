@@ -4,6 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	models "zonakarikatur/pkg/models"
 
@@ -12,6 +13,50 @@ import (
 	"github.com/gorilla/context"
 	"gopkg.in/go-playground/validator.v9"
 )
+
+// GetAdmin is func
+func GetAdmin(w http.ResponseWriter, r *http.Request) {
+	user := context.Get(r, "admin").(*MyClaims)
+	admin := models.GetAdmin(strconv.Itoa(user.IDAdmin))
+	if admin.Name == "" {
+		http.Error(w, "User tidak ditemukan.", http.StatusBadRequest)
+		return
+	}
+	message, err := json.Marshal(admin)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(message)
+}
+
+// UpdateAdmin is func
+func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
+	user := context.Get(r, "admin").(*MyClaims)
+	var admin models.Admin
+	if err := json.NewDecoder(r.Body).Decode(&admin); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	} else if err := validator.New().Struct(admin); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	admin.IDAdmin = user.IDAdmin
+	err := models.UpdateAdmin(admin)
+	if err != nil {
+		http.Error(w, "Gagal menyimpan perubahan. Coba lagi.", http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"message":"Password berhasil diperbarui!"}`))
+}
 
 // ChangePassword is Edit Password
 func ChangePassword(w http.ResponseWriter, r *http.Request) {

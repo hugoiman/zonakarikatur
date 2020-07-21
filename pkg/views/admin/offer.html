@@ -23,6 +23,10 @@
     />
 
     <!-- CSS Libraries -->
+    <link
+      rel="stylesheet"
+      href="/node_modules/chocolat/dist/css/chocolat.css"
+    />
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -47,143 +51,8 @@
               </div>
             </div>
 
-            <div class="section-body">
-              <div class="row">
-                <div class="col-12 col-md-4 col-lg-4">
-                  <article class="article article-style-c">
-                    <div class="article-header">
-                      <div
-                        class="article-image"
-                        data-background="../assets/img/news/img13.jpg"
-                      ></div>
-                    </div>
-                    <div class="article-details">
-                      <div class="article-category">
-                        <div class="bullet"></div>
-                        <a href="#">5 Days</a>
-                      </div>
-                      <div class="article-title">
-                        <h2>
-                          <a href="#"
-                            >Excepteur sint occaecat cupidatat non proident</a
-                          >
-                        </h2>
-                      </div>
-                      <div class="article-cta">
-                        <a
-                          href="#"
-                          class="btn btn-icon btn-danger"
-                          data-toggle="tooltip"
-                          data-placement="right"
-                          title="delete"
-                          ><i class="far fa-trash-alt"></i
-                        ></a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-12 col-md-4 col-lg-4">
-                  <article class="article article-style-c">
-                    <div class="article-header">
-                      <div
-                        class="article-image"
-                        data-background="../assets/img/news/img13.jpg"
-                      ></div>
-                    </div>
-                    <div class="article-details">
-                      <div class="article-category">
-                        <div class="bullet"></div>
-                        <a href="#">5 Days</a>
-                      </div>
-                      <div class="article-title">
-                        <h2>
-                          <a href="#"
-                            >Excepteur sint occaecat cupidatat non proident</a
-                          >
-                        </h2>
-                      </div>
-                      <div class="article-cta">
-                        <a
-                          href="#"
-                          class="btn btn-icon btn-danger"
-                          data-toggle="tooltip"
-                          data-placement="right"
-                          title="delete"
-                          ><i class="far fa-trash-alt"></i
-                        ></a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-12 col-md-4 col-lg-4">
-                  <article class="article article-style-c">
-                    <div class="article-header">
-                      <div
-                        class="article-image"
-                        data-background="../assets/img/news/img13.jpg"
-                      ></div>
-                    </div>
-                    <div class="article-details">
-                      <div class="article-category">
-                        <div class="bullet"></div>
-                        <a href="#">5 Days</a>
-                      </div>
-                      <div class="article-title">
-                        <h2>
-                          <a href="#"
-                            >Excepteur sint occaecat cupidatat non proident</a
-                          >
-                        </h2>
-                      </div>
-                      <div class="article-cta">
-                        <a
-                          href="#"
-                          class="btn btn-icon btn-danger"
-                          data-toggle="tooltip"
-                          data-placement="right"
-                          title="delete"
-                          ><i class="far fa-trash-alt"></i
-                        ></a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-12 col-md-4 col-lg-4">
-                  <article class="article article-style-c">
-                    <div class="article-header">
-                      <div
-                        class="article-image"
-                        data-background="../assets/img/news/img13.jpg"
-                      ></div>
-                    </div>
-                    <div class="article-details">
-                      <div class="article-category">
-                        <div class="bullet"></div>
-                        <a href="#">5 Days</a>
-                      </div>
-                      <div class="article-title">
-                        <h2>
-                          <a href="#"
-                            >Excepteur sint occaecat cupidatat non proident</a
-                          >
-                        </h2>
-                      </div>
-                      <div class="article-cta">
-                        <a
-                          href="#"
-                          class="btn btn-icon btn-danger"
-                          data-toggle="tooltip"
-                          data-placement="right"
-                          title="delete"
-                          ><i class="far fa-trash-alt"></i
-                        ></a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </div>
+            <div class="section-body gallery">
+              <div class="row" id="offers"></div>
             </div>
           </section>
         </div>
@@ -197,6 +66,12 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
+    <!-- Script -->
+    <script>
+      $(document).ready(function () {
+        getOffer();
+      });
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -212,11 +87,19 @@
     <script src="/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    <script src="/node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
+
+    <!-- Add JS -->
+    <script src="/assets2/js-view/indexAdmin.js"></script>
+    <script src="/assets2/js-view/offer.js"></script>
   </body>
 </html>
