@@ -23,10 +23,6 @@
     />
 
     <!-- CSS Libraries -->
-    <link
-      rel="stylesheet"
-      href="/node_modules/dropzone/dist/min/dropzone.min.css"
-    />
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" />
@@ -55,34 +51,61 @@
               <div class="row">
                 <div class="col-12">
                   <div class="card">
-                    <div class="card-header">
-                      <h4>Upload Your Photo</h4>
-                    </div>
-                    <div class="card-body">
-                      <div class="form-group row mb-4">
-                        <label class="col-form-label col-12 col-md-3 col-lg-3"
-                          >Category</label
-                        >
-                        <div class="col-sm-12 col-md-3">
-                          <select class="form-control selectric">
-                            <option>Karikatur Full Body</option>
-                            <option>Karikatur Half Body</option>
-                            <option>Ilustasi Wajah</option>
-                            <option>Mozaik</option>
-                            <option>Sketsa Digital</option>
-                            <option>Vexel Art</option>
-                          </select>
+                    <form id="form">
+                      <div class="card-body">
+                        <div class="form-group row mb-4">
+                          <label class="col-form-label col-12 col-md-3 col-lg-3"
+                            >Category</label
+                          >
+                          <div class="col-sm-12 col-md-3">
+                            <select
+                              class="form-control selectric"
+                              id="category"
+                            >
+                              <option value="karikatur-full-body"
+                                >Karikatur Full Body</option
+                              >
+                              <option value="karikatur-half-body"
+                                >Karikatur Half Body</option
+                              >
+                              <option value="ilustrasi-wajah"
+                                >Ilustasi Wajah</option
+                              >
+                              <option value="mozaik">Mozaik</option>
+                              <option value="sketsa">Sketsa Digital</option>
+                              <option value="vexel">Vexel Art</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                          <label
+                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                            >File</label
+                          >
+                          <div class="col-sm-12 col-md-7">
+                            <input
+                              required
+                              multiple
+                              type="file"
+                              class="form-control"
+                              id="image"
+                              name="image"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="form-group row mb-4">
+                          <label
+                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
+                          ></label>
+                          <div class="col-sm-12 col-md-7">
+                            <button type="submit" class="btn btn-primary">
+                              Upload
+                            </button>
+                          </div>
                         </div>
                       </div>
-                      <form action="#" class="dropzone" id="mydropzone">
-                        <div class="fallback">
-                          <input name="file" type="file" multiple />
-                        </div>
-                      </form>
-                    </div>
-                    <div class="card-footer">
-                      <button class="btn btn-primary col-12">Upload</button>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -114,13 +137,60 @@
     <script src="/assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
-    <script src="/node_modules/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script
+      type="text/javascript"
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/additional-methods.js"
+    ></script>
 
     <!-- Template JS File -->
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/custom.js"></script>
 
     <!-- Page Specific JS File -->
-    <script src="/assets/js/page/components-multiple-upload.js"></script>
+
+    <!-- Add JS -->
+    <script src="/assets2/js-view/indexAdmin.js"></script>
+    <script src="/assets2/js-view/gallery-create.js"></script>
+
+    <!-- Script -->
+    <script>
+      $.validator.addMethod(
+        "filesize",
+        function (value, element, param) {
+          for (i = 0; i < element.files.length; i++) {
+            return this.optional(element) || element.files[i].size <= param;
+          }
+        },
+        "File size must be less than 2 MB"
+      );
+
+      $("#form").validate({
+        rules: {
+          image: {
+            required: true,
+            extension: "jpg|jpeg",
+            filesize: 2000000,
+          },
+        },
+        messages: {
+          // <-- you must declare messages inside of "messages" option
+          image: {
+            required: "Silahkan mengisi bidang ini",
+            extension: "Format yang diizinkan jpg dan jpeg",
+          },
+        },
+        submitHandler: function (form) {
+          uploadFile();
+          // Swal.fire("Success", "Data telah disimpan.", "success");
+        },
+      });
+    </script>
   </body>
 </html>

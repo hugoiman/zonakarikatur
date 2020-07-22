@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 
@@ -71,10 +73,49 @@ func DeleteTestimony(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	path := "assets2/images/gallery/" + testimony.Image
+	path := "assets2/images/testimony/" + testimony.Image
 	_ = os.Remove(path)
 
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"message":"Gambar telah dihapus!"}`))
+}
+
+// UploadFileTestimony is func
+func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
+	basePath, _ := os.Getwd()
+	reader, err := r.MultipartReader()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	var fileName []string
+	for {
+		part, err := reader.NextPart()
+		if err == io.EOF {
+			break
+		}
+
+		fileLocation := filepath.Join(basePath, "assets2/images/testimony", part.FileName())
+		dst, err := os.Create(fileLocation)
+		if dst != nil {
+			defer dst.Close()
+		}
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if _, err := io.Copy(dst, part); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		fileName = append(fileName, part.FileName())
+	}
+	message, err := json.Marshal(fileName)
+
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(message)
 }

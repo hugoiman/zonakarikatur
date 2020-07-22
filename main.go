@@ -33,10 +33,12 @@ func main() {
 	router.HandleFunc("/api/gallery", controllers.GetGalleries).Methods("GET")
 	auth.HandleFunc("/api/gallery", controllers.CreateGallery).Methods("POST")
 	auth.HandleFunc("/api/gallery/{idGallery}", controllers.DeleteGallery).Methods("DELETE")
+	auth.HandleFunc("/api/gallery-file", controllers.UploadFileGallery).Methods("POST")
 
 	router.HandleFunc("/api/testimony", controllers.GetTestimonies).Methods("GET")
 	auth.HandleFunc("/api/testimony", controllers.CreateTestimony).Methods("POST")
 	auth.HandleFunc("/api/testimony/{idTestimony}", controllers.DeleteTestimony).Methods("DELETE")
+	auth.HandleFunc("/api/testimony-file", controllers.UploadFileTestimony).Methods("POST")
 
 	router.HandleFunc("/api/offer", controllers.GetOffers).Methods("GET")
 	auth.HandleFunc("/api/offer", controllers.CreateOffer).Methods("POST")

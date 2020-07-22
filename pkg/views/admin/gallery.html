@@ -182,6 +182,14 @@
             return elemTop <= docViewBottom && elemTop >= docViewTop;
           }
           if (elementScrolled("#image-loader")) {
+            // var fileref = document.createElement("link");
+            // fileref.setAttribute("rel", "stylesheet");
+            // fileref.setAttribute("type", "text/css");
+            // fileref.setAttribute(
+            //   "href",
+            //   "/node_modules/chocolat/dist/css/chocolat.css"
+            // );
+            $.getScript("/assets/js/scripts.js");
             loadGallery();
             switch (state) {
               case "full":
