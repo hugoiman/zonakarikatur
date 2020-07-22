@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 	mw "zonakarikatur/middleware"
 	models "zonakarikatur/pkg/models"
@@ -140,8 +141,7 @@ func SendEmail(subject string, to string, message string) error {
 	var configSMTPHost = "smtp.gmail.com"
 	var configSMTPPort = 587
 	var configEmail = "nanonymoux@gmail.com"
-	var configPassword = "kudaponi10"
-	// var configPassword = os.Getenv("PASS_EMAIL")
+	var configPassword = os.Getenv("PASS_EMAIL")
 
 	mailer := gomail.NewMessage()
 
