@@ -16,7 +16,7 @@ type Galleries struct {
 type Gallery struct {
 	IDGallery int    `json:"idGallery"`
 	Image     string `json:"image" validate:"required"`
-	Category  string `json:"category" validate:"required,eq=karikatur-full-body|eq=karikatur-half-bdoy|eq=sketsa|eq=mozaik|eq=ilustrasi-wajah|eq=vexel"`
+	Category  string `json:"category" validate:"required,eq=karikatur-full-body|eq=karikatur-half-body|eq=sketsa|eq=mozaik|eq=ilustrasi-wajah|eq=vexel"`
 	CreatedAt string `json:"createdAt"`
 }
 
