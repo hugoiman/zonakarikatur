@@ -48,7 +48,7 @@ func CreateGallery(w http.ResponseWriter, r *http.Request) {
 
 	err := models.CreateGallery(gallery)
 	if err != nil {
-		http.Error(w, "Gagal! Nama image sudah ada.", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
