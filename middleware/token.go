@@ -3,7 +3,6 @@ package middleware
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -11,9 +10,9 @@ import (
 )
 
 // MySigningKey is signature
-var MySigningKey = []byte(os.Getenv("SIGNING_KEY"))
+var MySigningKey = []byte("jwt super secret key")
 
-// var MySigningKey = []byte("jwt super secret key")
+// var MySigningKey = []byte(os.Getenv("SIGNING_KEY"))
 
 // MyClaims is Credential
 type MyClaims struct {
