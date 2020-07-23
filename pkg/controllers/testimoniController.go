@@ -97,6 +97,10 @@ func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
+		if _, err = os.Stat("assets2/images/testimony"); os.IsNotExist(err) {
+			os.MkdirAll("assets2/images/testimony", os.ModePerm)
+		}
+
 		fileLocation := filepath.Join(basePath, "assets2/images/testimony", part.FileName())
 		dst, err := os.Create(fileLocation)
 		if dst != nil {

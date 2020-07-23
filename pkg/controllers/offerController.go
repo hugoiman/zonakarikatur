@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -80,8 +79,6 @@ func DeleteOffer(w http.ResponseWriter, r *http.Request) {
 
 // UploadFileOffer is func
 func UploadFileOffer(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("hai")
-
 	basePath, _ := os.Getwd()
 	reader, err := r.MultipartReader()
 	if err != nil {
@@ -94,6 +91,10 @@ func UploadFileOffer(w http.ResponseWriter, r *http.Request) {
 		part, err := reader.NextPart()
 		if err == io.EOF {
 			break
+		}
+
+		if _, err = os.Stat("assets2/images/offer"); os.IsNotExist(err) {
+			os.MkdirAll("assets2/images/offer", os.ModePerm)
 		}
 
 		fileLocation := filepath.Join(basePath, "assets2/images/offer", part.FileName())
