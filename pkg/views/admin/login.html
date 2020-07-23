@@ -143,7 +143,7 @@
       var domain = "https://zonakarikatur.herokuapp.com";
       // var domain = "http://localhost:8080";
       $(document).ready(function () {
-        var token = Cookies.get("token");
+        var token = Cookies.get("token_zk");
         $.ajax({
           url: domain + "/api/auth",
           type: "GET",
@@ -172,7 +172,7 @@
           data: jsonData,
           contentType: "application/json",
           success: function (resp) {
-            Cookies.set("token", resp.token, { expires: 7, path: "/" });
+            Cookies.set("token_zk", resp.token, { expires: 7, path: "/" });
             window.location.href = "/admin/dashboard";
           },
           error: function (error) {

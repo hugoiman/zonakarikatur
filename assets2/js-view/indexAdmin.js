@@ -4,7 +4,7 @@ window.onload = function () {
 
 var domain = "https://zonakarikatur.herokuapp.com";
 // var domain = "http://localhost:8080";
-var token = Cookies.get("token");
+var token = Cookies.get("token_zk");
 
 function getAdmin() {
   $.ajax({
@@ -40,7 +40,6 @@ function deleteAlert(api, idImage) {
         headers: { Authorization: "Bearer " + token },
         success: function (resp) {
           $("#image" + idImage).fadeOut(1000);
-          // Swal.fire("Deleted!", "Your file has been deleted.", "success");
         },
         error: function (error) {
           failedAlert(error.responseText);
@@ -59,6 +58,6 @@ function failedAlert(error) {
 }
 
 function logout() {
-  Cookies.remove("token", { path: "/" });
+  Cookies.remove("token_zk", { path: "/" });
   window.location.href = "/login";
 }

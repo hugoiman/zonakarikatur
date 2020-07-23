@@ -16,8 +16,8 @@ function uploadFile() {
     "" +
     today.getSeconds();
 
-  var extension = imageName.substr(imageName.lastIndexOf(".") + 1);
-  fileName = imageName + "." + extension;
+  var extension = image.name.substr(image.name.lastIndexOf(".") + 1);
+  fileName = fileName + "-" + image.name;
   fileName = fileName.split(" ").join("-");
 
   fd.append("files", image, fileName);

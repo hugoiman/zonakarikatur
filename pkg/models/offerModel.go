@@ -21,7 +21,7 @@ type Offers struct {
 // GetOffers is func
 func GetOffers() Offers {
 	con := db.Connect()
-	query := "SELECT idOffer, title, image, createdAt FROM offer"
+	query := "SELECT idOffer, title, image, createdAt FROM offer ORDER BY idOffer DESC"
 	rows, _ := con.Query(query)
 
 	var createdAt time.Time

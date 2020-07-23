@@ -11,7 +11,9 @@ function loadTestimony() {
     success: function (resp) {
       $.each(resp.testimonies, function (idx, value) {
         $("#testimonies").append(
-          '<div class="col-6 col-md-3 col-lg-3">' +
+          '<div class="col-6 col-md-3 col-lg-3" id="image' +
+            value.idTestimony +
+            '">' +
             '<article class="article article-style-c">' +
             '<div class="article-header">' +
             '<div class="article-image" data-background="/assets2/images/testimony/' +

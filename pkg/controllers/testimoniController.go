@@ -86,7 +86,7 @@ func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
 	basePath, _ := os.Getwd()
 	reader, err := r.MultipartReader()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -103,12 +103,12 @@ func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
 			defer dst.Close()
 		}
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
 		if _, err := io.Copy(dst, part); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		fileName = append(fileName, part.FileName())

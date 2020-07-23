@@ -121,15 +121,13 @@ func ForgotPassword(w http.ResponseWriter, r *http.Request) {
 	pass.Write([]byte(newPass))
 	var encryptedPass = fmt.Sprintf("%x", pass.Sum(nil))
 
-	fmt.Println(encryptedPass)
-
-	// models.UpdatePassword(admin.IDAdmin, encryptedPass)
-	// message := "Hello, your new password is <b>" + newPass + "</b>"
-	// err := SendEmail("New Password", email, message)
-	// if err != nil {
-	// 	http.Error(w, "Gagal! ", http.StatusBadRequest)
-	// 	return
-	// }
+	models.UpdatePassword(admin.IDAdmin, encryptedPass)
+	message := "Hello, your new password is <b>" + newPass + "</b>"
+	err := SendEmail("New Password", email, message)
+	if err != nil {
+		http.Error(w, "Gagal! ", http.StatusBadRequest)
+		return
+	}
 
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
