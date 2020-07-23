@@ -49,7 +49,6 @@ function createGallery(fileName) {
     category,
     image,
   });
-  console.log(category);
 
   $.ajax({
     url: domain + "/api/gallery",

@@ -97,6 +97,10 @@ func UploadFileGallery(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
+		if _, err = os.Stat("assets2/images/gallery"); os.IsNotExist(err) {
+			os.MkdirAll("assets2/images/gallery", os.ModePerm)
+		}
+
 		fileLocation := filepath.Join(basePath, "assets2/images/gallery", part.FileName())
 		dst, err := os.Create(fileLocation)
 		if dst != nil {
