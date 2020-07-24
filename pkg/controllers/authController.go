@@ -138,8 +138,8 @@ func SendEmail(subject string, to string, message string) error {
 	var configSMTPHost = "smtp.gmail.com"
 	var configSMTPPort = 587
 	var configEmail = "nanonymoux@gmail.com"
-	// var configPassword = os.Getenv("PASS_EMAIL")
-	var configPassword = "bijikudaliar"
+	var configPassword = os.Getenv("PASS_EMAIL")
+	// var configPassword = "bkl"
 
 	mailer := gomail.NewMessage()
 
