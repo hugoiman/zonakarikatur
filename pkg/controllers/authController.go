@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
-	"os"
 	"time"
 	mw "zonakarikatur/middleware"
 	models "zonakarikatur/pkg/models"
@@ -122,16 +121,16 @@ func ForgotPassword(w http.ResponseWriter, r *http.Request) {
 	var encryptedPass = fmt.Sprintf("%x", pass.Sum(nil))
 
 	models.UpdatePassword(admin.IDAdmin, encryptedPass)
-	message := "Hello, your new password is <b>" + newPass + "</b>"
+	message := "Hallo " + admin.Name + ", your new password is <b>" + newPass + "</b>"
 	err := SendEmail("New Password", email, message)
 	if err != nil {
-		http.Error(w, "Gagal! ", http.StatusBadRequest)
+		http.Error(w, "Gagal! Coba beberapa saat lagi.", http.StatusBadRequest)
 		return
 	}
 
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message":"Password baru telah dikirim ke email anda."}`))
+	w.Write([]byte(`{"message":"New password has been sent to your email."}`))
 }
 
 // SendEmail is func
@@ -139,7 +138,8 @@ func SendEmail(subject string, to string, message string) error {
 	var configSMTPHost = "smtp.gmail.com"
 	var configSMTPPort = 587
 	var configEmail = "nanonymoux@gmail.com"
-	var configPassword = os.Getenv("PASS_EMAIL")
+	// var configPassword = os.Getenv("PASS_EMAIL")
+	var configPassword = "bijikudaliar"
 
 	mailer := gomail.NewMessage()
 

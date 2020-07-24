@@ -1,6 +1,3 @@
-var domain = "https://zonakarikatur.herokuapp.com";
-// var domain = "http://localhost:8080";
-
 function getBtnWhatsapp() {
   var options = {
     whatsapp: 6281286185009, // WhatsApp number

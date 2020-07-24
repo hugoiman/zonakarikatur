@@ -55,7 +55,7 @@ func UpdateAdmin(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message":"Password berhasil diperbarui!"}`))
+	w.Write([]byte(`{"message":"Profil berhasil diperbarui!"}`))
 }
 
 // ChangePassword is Edit Password

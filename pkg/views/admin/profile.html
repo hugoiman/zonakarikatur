@@ -144,6 +144,7 @@
     <!-- Page Specific JS File -->
 
     <!-- Add JS -->
+    <script src="/assets2/js-view/domain.js"></script>
     <script src="/assets2/js-view/indexAdmin.js"></script>
 
     <!-- Script -->
@@ -168,6 +169,9 @@
           contentType: "application/json",
           success: function (resp) {
             Swal.fire("Updated!", "Profil telah diperbarui.", "success");
+            setTimeout(function () {
+              location.reload();
+            }, 3000);
           },
           error: function (error) {
             failedAlert(error.responseText);
