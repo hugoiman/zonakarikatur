@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 	mw "zonakarikatur/middleware"
 	models "zonakarikatur/pkg/models"
