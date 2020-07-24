@@ -17,9 +17,9 @@
 /dist/node_modules/
 /pages/layouts/
 /pages/
-/assets2/images/gallery/
-/assets2/images/offer/
-/assets2/images/testimony/
+/assets2/images/gallery2/
+/assets2/images/offer2/
+/assets2/images/testimony2/
 
 # OS or Editor folders
 ._*
