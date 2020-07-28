@@ -230,7 +230,7 @@ func main() {
 
 	router.HandleFunc("/admin/faq", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
-			"./pkg/views/admin/faq-create.html",
+			"./pkg/views/admin/faq.html",
 			"./pkg/views/admin/header.html",
 			"./pkg/views/admin/footer.html",
 		))
@@ -244,6 +244,19 @@ func main() {
 	router.HandleFunc("/admin/about", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
 			"./pkg/views/admin/about.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/admin/link", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/link-order.html",
 			"./pkg/views/admin/header.html",
 			"./pkg/views/admin/footer.html",
 		))

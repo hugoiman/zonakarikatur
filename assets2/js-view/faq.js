@@ -2,7 +2,6 @@ function getFaq() {
   $.ajax({
     url: domain + "/api/faq",
     type: "GET",
-    headers: { Authorization: "Bearer " + token },
     success: function (resp) {
       $.each(resp.faqs, function (idx, value) {
         $("#faq").append(

@@ -6,7 +6,7 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
       name="viewport"
     />
-    <title>About &mdash; Stisla</title>
+    <title>Link Order &mdash; Stisla</title>
 
     <!-- General CSS Files -->
     <link
@@ -39,18 +39,43 @@
         <div class="main-content">
           <section class="section">
             <div class="section-header">
-              <h1>About</h1>
+              <h1>Link Order</h1>
             </div>
 
             <div class="section-body">
               <div class="row">
-                <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <h4>Describe Your Product</h4>
+                      <h4>Post Your Link Order</h4>
                     </div>
                     <div class="card-body">
-                      <form id="form"></form>
+                      <form id="form">
+                        <div class="form-row">
+                          <div class="form-group col-md-11">
+                            <label>Link</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="link"
+                              name="link"
+                            />
+                            <input type="text" id="idLink" hidden />
+                          </div>
+                          <div class="form-group col-md-1">
+                            <label>.</label>
+                            <div class="input-group-append">
+                              <button
+                                class="btn btn-primary"
+                                type="button"
+                                id="btn_simpan"
+                              >
+                                Save
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -96,13 +121,16 @@
     <!-- Add JS -->
     <script src="/assets2/js-view/domain.js"></script>
     <script src="/assets2/js-view/indexAdmin.js"></script>
-    <script src="/assets2/js-view/about.js"></script>
+    <script src="/assets2/js-view/link-order.js"></script>
 
     <!-- Script -->
     <script>
-      $(".nav-about").addClass("active");
+      $(".nav-link-order").addClass("active");
+      $("#btn_simpan").click(function () {
+        updateLinkOrder();
+      });
       $(document).ready(function () {
-        getAbout();
+        getLinkOrder();
       });
     </script>
   </body>
