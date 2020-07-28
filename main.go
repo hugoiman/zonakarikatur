@@ -45,6 +45,16 @@ func main() {
 	auth.HandleFunc("/api/offer/{idOffer}", controllers.DeleteOffer).Methods("DELETE")
 	auth.HandleFunc("/api/offer-file", controllers.UploadFileOffer).Methods("POST")
 
+	router.HandleFunc("/api/faq", controllers.GetFaqs).Methods("GET")
+	auth.HandleFunc("/api/faq", controllers.CreateFaq).Methods("POST")
+	auth.HandleFunc("/api/faq/{idFaq}", controllers.DeleteFaq).Methods("DELETE")
+
+	router.HandleFunc("/api/link", controllers.GetLink).Methods("GET")
+	auth.HandleFunc("/api/link/{idLink}", controllers.UpdateLink).Methods("PUT")
+
+	router.HandleFunc("/api/about", controllers.GetAbout).Methods("GET")
+	auth.HandleFunc("/api/about/{idAbout}", controllers.UpdateAbout).Methods("PUT")
+
 	auth.HandleFunc("/api/password", controllers.ChangePassword).Methods("POST")
 	router.HandleFunc("/api/password", controllers.ForgotPassword).Methods("PUT")
 
@@ -208,6 +218,32 @@ func main() {
 	router.HandleFunc("/admin/create-testimony", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
 			"./pkg/views/admin/testimony-create.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/admin/faq", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/faq-create.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/admin/about", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/about.html",
 			"./pkg/views/admin/header.html",
 			"./pkg/views/admin/footer.html",
 		))
