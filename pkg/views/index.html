@@ -7,11 +7,7 @@
                 <div class="col-md-5 site-animate mb-5">
                     <!-- <h4 class="site-sub-title">Our Story</h4> -->
                     <h2 class="site-primary-title display-4">About Us</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                        Consonantia, there live the blind texts.</p>
-                    <p>A small river named Duden flows by their place and supplies it with the
-                        necessary regelialia. It is a paradisematic country, in which roasted parts of
-                        sentences fly into your mouth.</p>
+                    <div id="description"></div>
                 </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-6 site-animate img" data-animate-effect="fadeInRight">
@@ -32,40 +28,31 @@
                     <div class="owl-carousel site-owl" id="offers"></div>
                 </div>
             </div>
-        </div>  
+        </div>
     </section>
     <!-- END section -->
 
-    <!-- <section class="site-section parallax" id="section-offer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center mb-5 site-animate">
-                    <h2 class="display-4">Special Offer</h2>
-                </div>
-                <div class="col-md-12 text-center">
-                    <ul class="nav site-tab-nav nav-pills mb-5" id="pills-tab" role="tablist"></ul>
-                    <div class="tab-content text-left" id="galleries"></div>
-                </div>
-            </div>
-        </div>
-    </section> -->
+    <!-- <section class="site-section parallax" id="section-offer"> <div
+    class="container"> <div class="row"> <div class="col-md-12 text-center mb-5
+    site-animate"> <h2 class="display-4">Special Offer</h2> </div> <div
+    class="col-md-12 text-center"> <ul class="nav site-tab-nav nav-pills mb-5"
+    id="pills-tab" role="tablist"></ul> <div class="tab-content text-left"
+    id="galleries"></div> </div> </div> </div> </section> -->
     <!-- END section -->
 
     <section class="site-section bg-light" id="section-testimoni">
         <div class="container">
-            <!-- <div class="row site-custom-gutters"> -->
-
             <div class="col-md-12 text-center mb-5 site-animate">
                 <h2 class="display-4">Testimonial</h2>
             </div>
-
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner" id="testimonies">
                     <!-- Testimoni List -->
-                                     
+
                 </div>
                 <a
-                    class="carousel-control-prev" onclick="loadTestimony()"
+                    class="carousel-control-prev"
+                    onclick="loadTestimony()"
                     href="#carouselExampleControls"
                     role="button"
                     data-slide="prev"
@@ -97,7 +84,10 @@
                 <!-- Gallery List -->
             </div>
             <p class="mb-0" style="text-align:center;">
-                <a href="/gallery" class="btn btn-primary btn-sm" style="font-family: 'Raleway', sans-serif;">Show more >>></a>
+                <a
+                    href="/gallery"
+                    class="btn btn-primary btn-sm"
+                    style="font-family: 'Raleway', sans-serif;">Show more >>></a>
             </p>
         </div>
     </section>
@@ -172,7 +162,7 @@
                         Address:
                         <br>
                         <a href="/" onclick="return false;">Matraman dalam, Jakarta</a>
-                        
+
                         <!-- Contact -->
                     </p>
 
@@ -181,6 +171,24 @@
             </div>
         </div>
     </section>
+
+    <section class="site-section bg-light" id="section-faq">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center mb-5 site-animate">
+                    <h2 class="display-4">FAQ</h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel-group" id="accordion">
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- END section -->
+
     <!-- <div id="map"></div> -->
     <!-- END section -->
     {{template "_footer" .}}
@@ -292,16 +300,48 @@
 
     <script src="/assets2/js/jquery.min.js"></script>
     <script>
+        function getFaq() {
+        $.ajax({
+            url: domain + "/api/faq",
+            type: "GET",
+            success: function (resp) {
+                $.each(resp.faqs, function (idx, value) {
+                    $("#accordion").append(
+                        '<div class="panel panel-default" style="border: 2px solid #FDA403; border-radius: 10px; margin-bottom:3px">' +
+                        '<div class="panel-heading">' +
+                        '<h4 class="panel-title">' +
+                        '<a data-toggle="collapse" data-parent="#accordion" href="#collapse'+value.idFaq+'"><h5 style="margin-left: 8px;"><i class="fas fa-caret-down" style="float: right; margin: 8px 8px 0px 0px"></i>' +
+                        value.question +
+                        "</h5></a>" +
+                        "</h4>" +
+                        "</div>" +
+                        '<div id="collapse'+value.idFaq+'" class="panel-collapse collapse in">' +
+                        '<div class="panel-body" style="margin-left: 8px;">' +
+                        value.answer +
+                        "</div>" +
+                        "</div>" +
+                        "</div>"
+                    );
+                })
+            },
+            error: function (error) {
+            console.log("FAQ not found.");
+            },
+        });
+        }
         $(function () {
-            $("#nav-about").attr("href","#section-about");
-            $("#nav-offer").attr("href","#section-offer");
-            $("#nav-testimony").attr("href","#section-testimoni");
-            $("#nav-gallery").attr("href","#section-gallery");
-            $("#nav-contact").attr("href","#section-contact");
-            
-            
+            $("#nav-about").attr("href", "#section-about");
+            $("#nav-offer").attr("href", "#section-offer");
+            $("#nav-testimony").attr("href", "#section-testimoni");
+            $("#nav-gallery").attr("href", "#section-gallery");
+            $("#nav-contact").attr("href", "#section-contact");
+            $("#nav-faq").attr("href", "#section-faq");
+
+            getAbout();
+            getLinkOrder();
             getBtnWhatsapp();
             getOffer();
+            getFaq();
             loadTestimony();
             loadTestimony();
             getGallery();

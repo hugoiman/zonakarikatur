@@ -2,7 +2,7 @@ function getBtnWhatsapp() {
   var options = {
     whatsapp: 6281286185009, // WhatsApp number
     call_to_action: "Hi, ada pertanyaan?", // Call to action
-    position: "right", // Position may be 'right' or 'left'
+    position: "left", // Position may be 'right' or 'left'
   };
   var proto = document.location.protocol,
     host = "getbutton.io",
@@ -16,6 +16,48 @@ function getBtnWhatsapp() {
   };
   var x = document.getElementsByTagName("script")[0];
   x.parentNode.insertBefore(s, x);
+}
+
+function getAbout() {
+  $.ajax({
+    url: domain + "/api/about",
+    type: "GET",
+    success: function (resp) {
+      $("#description").html(resp.description);
+    },
+    error: function (error) {
+      console.log("Description not found.");
+    },
+  });
+}
+
+function getLinkOrder() {
+  $.ajax({
+    url: domain + "/api/link",
+    type: "GET",
+    success: function (resp) {
+      if (resp.link !== "") {
+        $("#description").append(
+          '<p><a href="' +
+            resp.link +
+            '" class="btn btn-secondary btn-lg"><i class="fas fa-shopping-cart"></i> Order Now</a></p>'
+        );
+        $("body").append(
+          '<a href="' +
+            resp.link +
+            '" target="_blank" style="position:fixed;bottom:3%;right:5px;margin:0;padding:5px 15px;">' +
+            '<button type="button" class="btn btn-primary btn-sm">' +
+            '<i class="fas fa-shopping-cart">' +
+            "<b> Order Now </b></i>" +
+            "</button>" +
+            "</a>"
+        );
+      }
+    },
+    error: function (error) {
+      console.log("Description not found.");
+    },
+  });
 }
 
 function getOffer() {
