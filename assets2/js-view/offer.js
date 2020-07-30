@@ -12,7 +12,7 @@ function getOffer() {
           '">' +
           '<article class="article article-style-c">' +
           '<div class="article-header">' +
-          '<div class="article-image" data-background="/assets2/images/offer/' +
+          '<div class="article-image" data-background="' +
           value.image +
           '"></div>' +
           '<div class="article-badge">' +
@@ -21,7 +21,7 @@ function getOffer() {
           '","' +
           value.idOffer +
           '")><i class="far fa-trash-alt"></i></a>' +
-          '<a class="btn btn-icon btn-primary gallery-item" href="/assets2/images/offer/' +
+          '<a class="btn btn-icon btn-primary gallery-item" href="' +
           value.image +
           '"style="height: auto; width: auto;"><i class="far fa-eye"></i></a>' +
           "</div>" +

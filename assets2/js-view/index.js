@@ -40,7 +40,7 @@ function getLinkOrder() {
         $("#description").append(
           '<p><a href="' +
             resp.link +
-            '" class="btn btn-secondary btn-lg"><i class="fas fa-shopping-cart"></i> Order Now</a></p>'
+            '" target="_blank" class="btn btn-secondary btn-lg"><i class="fas fa-shopping-cart"></i> Order Now</a></p>'
         );
         $("body").append(
           '<a href="' +
