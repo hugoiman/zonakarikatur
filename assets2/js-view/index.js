@@ -69,9 +69,9 @@ function getOffer() {
     success: function (resp) {
       $.each(resp.offers, function (idx, value) {
         offers +=
-          '<div class="item"><div class="media d-block mb-4 text-center site-media site-animate border-0"><a href="/assets2/images/offer/' +
+          '<div class="item"><div class="media d-block mb-4 text-center site-media site-animate border-0"><a href="' +
           value.image +
-          '" class="site-thumbnail image-popup"><img src="/assets2/images/offer/' +
+          '" class="site-thumbnail image-popup"><img src="' +
           value.image +
           '" class="img-fluid"></a><div class="media-body p-md-2 p-1"><h5 class="mt-0 h4">' +
           value.title +
