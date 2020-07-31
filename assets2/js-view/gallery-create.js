@@ -1,3 +1,4 @@
+// Save to Server & CLOUDINARY
 function uploadFile() {
   var image = $("#image")[0].files;
   var fd = new FormData();

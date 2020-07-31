@@ -40,3 +40,5 @@ Thumbs.db
 .komodotools
 *.komodoproject
 node_modules
+
+.env

@@ -1,3 +1,4 @@
+// Save to Server & CLOUDINARY
 function uploadFile() {
   var image = $("#image")[0].files;
   var fd = new FormData();
@@ -63,3 +64,26 @@ function createTestimony(fileName) {
     },
   });
 }
+
+// function uploadFile() {
+//   var file = $("#image")[0].files;
+//   var formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+//   formData.append("folder", CLOUDINARY_UPLOAD_TESTIMONY);
+
+//   axios({
+//     url: CLOUDINARY_URL,
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     data: formData,
+//   })
+//     .then(function (resp) {
+//       console.log(resp);
+//     })
+//     .catch(function (err) {
+//       console.log(err);
+//     });
+// }

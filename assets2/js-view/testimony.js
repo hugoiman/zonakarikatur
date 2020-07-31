@@ -16,11 +16,11 @@ function loadTestimony() {
             '">' +
             '<article class="article article-style-c">' +
             '<div class="article-header">' +
-            '<div class="article-image" data-background="/assets2/images/testimony/' +
+            '<div class="article-image" data-background="' +
             value.image +
             '"></div>' +
             '<div class="article-badge">' +
-            '<a href="/assets2/images/testimony/' +
+            '<a href="' +
             value.image +
             '" class="btn btn-icon btn-primary gallery-item" style="height: auto; width: auto;"><i class="far fa-eye"></i></a>' +
             '<a href="#" class="btn btn-icon btn-danger" onclick=deleteAlert("/api/testimony/' +

@@ -180,9 +180,9 @@ function loadTestimony() {
       });
       $.each(resp.testimonies, function (idx, value) {
         content +=
-          '<div class="col-md-2 col-4 site-animate"><a href="/assets2/images/testimony/' +
+          '<div class="col-md-2 col-4 site-animate"><a href="' +
           value.image +
-          '" class="site-thumbnail image-popup"><img src="/assets2/images/testimony/' +
+          '" class="site-thumbnail image-popup"><img src="' +
           value.image +
           '" class="img-fluid"></a></div>';
       });
@@ -215,9 +215,9 @@ function getGallery() {
           idx +
           " " +
           value.category +
-          '"><a href="/assets2/images/gallery/' +
+          '"><a href="' +
           value.image +
-          '" class="site-thumbnail image-popup"><img src="/assets2/images/gallery/' +
+          '" class="site-thumbnail image-popup"><img src="' +
           value.image +
           '" class="img-fluid" alt="' +
           value.category +
@@ -256,9 +256,9 @@ function loadGallery() {
           idx +
           " " +
           value.category +
-          ' all"><a href="/assets2/images/gallery/' +
+          ' all"><a href="' +
           value.image +
-          '" class="site-thumbnail image-popup"><img src="/assets2/images/gallery/' +
+          '" class="site-thumbnail image-popup"><img src="' +
           value.image +
           '" class="img-fluid" alt="' +
           value.category +
