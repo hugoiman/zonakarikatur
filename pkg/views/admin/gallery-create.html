@@ -194,6 +194,7 @@
           },
         },
         submitHandler: function (form) {
+          $("#btn_submit").addClass("disabled btn-progress");
           uploadFile();
         },
       });

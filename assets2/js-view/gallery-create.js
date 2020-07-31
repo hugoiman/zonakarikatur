@@ -40,6 +40,9 @@ function uploadFile() {
     error: function (error) {
       failedAlert(error.responseText);
     },
+    complete: function (data) {
+      $("#btn_submit").removeClass("disabled btn-progress");
+    },
   });
 }
 
@@ -66,4 +69,8 @@ function createGallery(fileName) {
       failedAlert(error.responseText);
     },
   });
+}
+
+function uploadDone() {
+  setTimeout(function () {}, 5000);
 }

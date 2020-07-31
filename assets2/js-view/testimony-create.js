@@ -40,6 +40,9 @@ function uploadFile() {
     error: function (error) {
       failedAlert(error.responseText);
     },
+    complete: function (data) {
+      $("#btn_submit").removeClass("disabled btn-progress");
+    },
   });
 }
 
