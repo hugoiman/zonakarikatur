@@ -7,7 +7,7 @@
       name="viewport"
     />
     <link rel="icon" href="/assets2/images/logo.jpg" />
-    <title>Gallery &mdash; Zona Karikatur</title>
+    <title>Frame &mdash; Zona Karikatur</title>
 
     <!-- General CSS Files -->
     <link
@@ -44,15 +44,15 @@
         <div class="main-content">
           <section class="section">
             <div class="section-header">
-              <h1>Gallery</h1>
+              <h1>Frame</h1>
               <div class="section-header-button">
-                <a href="create-gallery" class="btn btn-icon btn-primary"
+                <a href="create-frame" class="btn btn-icon btn-primary"
                   ><i class="fas fa-plus"></i> Add New</a
                 >
               </div>
             </div>
 
-            <div class="section-body gallery">
+            <div class="section-body frame">
               <div class="form-group row mb-4">
                 <div class="col-sm-12 col-md-3">
                   <select
@@ -61,17 +61,12 @@
                     onchange="changeCategory();"
                   >
                     <option value="1">Semua</option>
-                    <option value="2">Karikatur Full Body</option>
-                    <option value="3">Karikatur Half Body</option>
-                    <option value="4">Ilustasi Wajah</option>
-                    <option value="5">Mozaik</option>
-                    <option value="6">Sketsa Digital</option>
-                    <option value="7">Vexel Art</option>
-                    <option value="8">Foto Kolase</option>
+                    <option value="2">Bingkai Balik/Mirror</option>
+                    <option value="3">Bingkai Minimalis</option>
                   </select>
                 </div>
               </div>
-              <div class="row" id="galleries"></div>
+              <div class="row" id="frames"></div>
               <div style="height: 230px;"></div>
             </div>
             <div id="image-loader"></div>
@@ -109,7 +104,7 @@
 
     <!-- Script -->
     <script>
-      $(".nav-gallery").addClass("active");
+      $(".nav-frame").addClass("active");
       var state = "";
       function changeCategory() {
         var selectBox = document.getElementById("selectBox");
@@ -119,25 +114,10 @@
             semua();
             break;
           case "2":
-            fullbody();
+            mirror();
             break;
           case "3":
-            halfbody();
-            break;
-          case "4":
-            ilustrasi();
-            break;
-          case "5":
-            mozaik();
-            break;
-          case "6":
-            sketsa();
-            break;
-          case "7":
-            vexel();
-            break;
-          case "8":
-            kolase();
+            minimalis();
             break;
         }
       }
@@ -145,46 +125,21 @@
         $(".all").show();
         state = "all";
       }
-      function fullbody() {
+      function mirror() {
         // $("#btn_karikatur").addClass("active");
         $(".all").hide();
-        $(".karikatur-full-body").show();
-        state = "full";
+        $(".frame-mirror").show();
+        state = "mirror";
       }
-      function halfbody() {
+      function minimalis() {
         // $("#btn_karikatur").addClass("active");
         $(".all").hide();
-        $(".karikatur-half-body").show();
-        state = "half";
-      }
-      function mozaik() {
-        $(".all").hide();
-        $(".mozaik").show();
-        state = "mozaik";
-      }
-      function sketsa() {
-        $(".all").hide();
-        $(".sketsa").show();
-        state = "sketsa";
-      }
-      function vexel() {
-        $(".all").hide();
-        $(".vexel").show();
-        state = "vexel";
-      }
-      function ilustrasi() {
-        $(".all").hide();
-        $(".ilustrasi-wajah").show();
-        state = "ilustrasi";
-      }
-      function kolase() {
-        $(".all").hide();
-        $(".kolase").show();
-        state = "kolase";
+        $(".frame-minimalis").show();
+        state = "minimalis";
       }
 
       $(document).ready(function () {
-        loadGallery();
+        loadFrame();
         $(window).scroll(function () {
           function elementScrolled(elem) {
             var docViewTop = $(window).scrollTop();
@@ -201,28 +156,13 @@
             //   "/node_modules/chocolat/dist/css/chocolat.css"
             // );
             $.getScript("/assets/js/scripts.js");
-            loadGallery();
+            loadFrame();
             switch (state) {
-              case "full":
-                fullbody();
+              case "mirror":
+                mirror();
                 break;
-              case "half":
-                halfbody();
-                break;
-              case "mozaik":
-                mozaik();
-                break;
-              case "vexel":
-                vexel();
-                break;
-              case "sketsa":
-                sketsa();
-                break;
-              case "ilustrasi":
-                ilustrasi();
-                break;
-              case "kolase":
-                kolase();
+              case "minimalis":
+                minimalis();
                 break;
               default:
                 semua();
@@ -241,6 +181,6 @@
     <!-- Add JS -->
     <script src="/assets2/js-view/domain.js"></script>
     <script src="/assets2/js-view/indexAdmin.js"></script>
-    <script src="/assets2/js-view/gallery.js"></script>
+    <script src="/assets2/js-view/frame.js"></script>
   </body>
 </html>

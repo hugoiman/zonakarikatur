@@ -273,6 +273,41 @@ function loadGallery() {
   flagGallery += 12;
 }
 
+function getFrame() {
+  var frames = "";
+
+  $.ajax({
+    url: domain + "/api/frame",
+    type: "GET",
+    data: {
+      offset: 0,
+      limit: 12,
+    },
+    async: false,
+    success: function (resp) {
+      frames = "";
+      $.each(resp.frames, function (idx, value) {
+        frames +=
+          '<div class="col-md-2 col-4 site-animate g' +
+          idx +
+          " " +
+          value.model +
+          '"><a href="' +
+          value.image +
+          '" class="site-thumbnail image-popup"><img src="' +
+          value.image +
+          '" class="img-fluid" alt="' +
+          value.model +
+          '"></a></div>';
+      });
+    },
+    error: function (error) {
+      console.log("error");
+    },
+  });
+  $(".site-custom-gutters").append(frames);
+}
+
 // if ('serviceWorker' in navigator) {   window.addEventListener('load',
 // function() {
 // navigator.serviceWorker.register('/sw').then(function(registration) {

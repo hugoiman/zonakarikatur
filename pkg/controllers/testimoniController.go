@@ -83,7 +83,7 @@ func DeleteTestimony(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"message":"Gambar telah dihapus!"}`))
 }
 
-// Upload to server & cloudinary
+// UploadFileTestimony to server & cloudinary
 func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
 	var (
 		status int
@@ -101,7 +101,7 @@ func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var linkFile []string
-	var publicId string
+	var publicID string
 	for _, fheaders := range r.MultipartForm.File {
 		for key, hdr := range fheaders {
 			var infile multipart.File
@@ -121,11 +121,11 @@ func UploadFileTestimony(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			publicId, err = cloudinary.GetService().UploadFile(strconv.Itoa(key), "zonakarikatur/testimony", outfile.Name(), nil)
+			publicID, err = cloudinary.GetService().UploadFile(strconv.Itoa(key), "zonakarikatur/testimony", outfile.Name(), nil)
 			if err != nil {
 				log.Fatal(err)
 			}
-			linkFile = append(linkFile, publicId)
+			linkFile = append(linkFile, publicID)
 		}
 	}
 

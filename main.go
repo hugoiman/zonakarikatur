@@ -58,6 +58,11 @@ func main() {
 	auth.HandleFunc("/api/password", controllers.ChangePassword).Methods("POST")
 	router.HandleFunc("/api/password", controllers.ForgotPassword).Methods("PUT")
 
+	router.HandleFunc("/api/frame", controllers.GetFrames).Methods("GET")
+	auth.HandleFunc("/api/frame", controllers.CreateFrame).Methods("POST")
+	auth.HandleFunc("/api/frame/{idFrame}", controllers.DeleteFrame).Methods("DELETE")
+	auth.HandleFunc("/api/frame-file", controllers.UploadFileFrame).Methods("POST")
+
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	router.PathPrefix("/assets2/").Handler(http.StripPrefix("/assets2/", http.FileServer(http.Dir("assets2"))))
 	router.PathPrefix("/node_modules/").Handler(http.StripPrefix("/node_modules/", http.FileServer(http.Dir("node_modules2"))))
@@ -78,6 +83,19 @@ func main() {
 	router.HandleFunc("/gallery", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
 			"./pkg/views/gallery.html",
+			"./pkg/views/header.html",
+			"./pkg/views/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/bingkai", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/frame.html",
 			"./pkg/views/header.html",
 			"./pkg/views/footer.html",
 		))
@@ -267,7 +285,34 @@ func main() {
 		}
 	})
 
+	router.HandleFunc("/admin/frame", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/frame.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/admin/create-frame", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/frame-create.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
 	// os.Setenv("PORT", "8080")
+	// port := "8080"
 	port := os.Getenv("PORT")
 
 	fmt.Println("Server running at :", port)

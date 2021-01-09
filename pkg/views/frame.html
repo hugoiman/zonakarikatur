@@ -2,47 +2,23 @@
 <html lang="en">
   {{template "_header" .}}
 
-    <section class="site-section parallax" id="section-gallery">
+    <section class="site-section parallax" id="section-frame">
       <div class="container">
         <div class="row site-custom-gutters">
           <div class="col-md-12 text-center mb-5 site-animate">
-            <h2 class="display-4">Gallery</h2>
+            <h2 class="display-4">Bingkai</h2>
           </div>
           <div class="col-md-12 text-center">
             <ul class="nav site-tab-nav nav-pills mb-5" id="pills-tab" role="tablist"> 
               <li class="nav-item site-animate">
                 <a class="nav-link active" onclick="semua()" id="btn_all" data-toggle="pill">All</a>
               </li>   
-
-              <li class="nav-item site-animate dropdwn-toggle" data-toggle="dropdown">
-                <a class="nav-link" data-toggle="pill" id="btn_karikatur">Karikatur
-                  <span class="oi oi-caret-bottom" aria-hidden="true"></span>
-                </a>
-              </li>
-              <ul class="dropdown-menu" role="menu">
-                <li class="nav-item site-animate">
-                  <a class="nav-link" onclick="fullbody()" id="btn_full_body" data-toggle="pill">Full Body</a>
-                </li>
-                <li class="nav-item site-animate">
-                  <a class="nav-link" onclick="halfbody()" id="btn_half_body" data-toggle="pill">Half Body</a>
-                </li>
-              </ul>
-
               <li class="nav-item site-animate">
-                <a class="nav-link" onclick="ilustrasi()" id="btn_ilustrasi" data-toggle="pill">Ilustrasi Wajah</a>
+                <a class="nav-link" onclick="mirror()" id="btn_mirror" data-toggle="pill">Bingkai Mirror</a>
               </li>
               <li class="nav-item site-animate">
-                <a class="nav-link" onclick="mozaik()" id="btn_mozaik" data-toggle="pill">Mozaik</a>
-              </li>
-              <li class="nav-item site-animate">
-                <a class="nav-link" onclick="sketsa()" id="btn_sketsa" data-toggle="pill">Sketsa</a>
-              </li>
-              <li class="nav-item site-animate">
-                <a class="nav-link" onclick="vexel()" id="btn_vexel" data-toggle="pill">Vexel Art</a>
-              </li>  
-              <li class="nav-item site-animate">
-                <a class="nav-link" onclick="kolase()" id="btn_kolase" data-toggle="pill">Kolase</a>
-              </li>           
+                <a class="nav-link" onclick="minimalis()" id="btn_minimalis" data-toggle="pill">Bingkai Minimalis</a>
+              </li>          
             </ul>
           </div>
 
@@ -70,54 +46,69 @@
         $(".all").show();
         state = "all";
       }
-      function fullbody(){
-        // $("#btn_karikatur").addClass("active");
+      function minimalis(){
         $(".all").hide();
-        $(".karikatur-full-body").show();
-        state = "full";
+        $(".frame-minimalis").show();
+        state = "minimalis";
       }
-      function halfbody(){
-        // $("#btn_karikatur").addClass("active");
+      function mirror(){
         $(".all").hide();
-        $(".karikatur-half-body").show();
-        state = "half";
+        $(".frame-mirror").show();
+        state = "mirror";
       }
-      function mozaik(){
-        $(".all").hide();
-        $(".mozaik").show();
-        state = "mozaik";
+
+var flagFrame = 0;
+function loadFrame() {
+  $.ajax({
+    url: domain + "/api/frame",
+    type: "GET",
+    data: {
+      offset: flagFrame,
+      limit: 12,
+    },
+    async: false,
+    success: function (resp) {
+      if (resp.frames == null) {
+        $("#image-loader").attr("hidden", true);
       }
-      function sketsa(){
-        $(".all").hide();
-        $(".sketsa").show();
-        state = "sketsa";
-      }
-      function vexel(){
-        $(".all").hide();
-        $(".vexel").show();
-        state = "vexel";
-      }
-      function ilustrasi(){
-        $(".all").hide();
-        $(".ilustrasi-wajah").show();
-        state = "ilustrasi";
-      }
-      function kolase(){
-        $(".all").hide();
-        $(".kolase").show();
-        state = "kolase";
-      }
+      $.getScript("/assets2/js/main.js", function () {
+        //
+      });
+
+      frames = "";
+      $.each(resp.frames, function (idx, value) {
+        frames +=
+          '<div class="col-md-2 col-4 site-animate g' +
+          idx +
+          " " +
+          value.model +
+          ' all"><a href="' +
+          value.image +
+          '" class="site-thumbnail image-popup"><img src="' +
+          value.image +
+          '" class="img-fluid" alt="' +
+          value.model +
+          '"></a></div>';
+      });
+    },
+    error: function (error) {
+      console.log("error");
+    },
+  });
+  $(".site-custom-gutters").append(frames);
+  flagFrame += 12;
+}
       $(document).ready(function(){
         getBtnWhatsapp();
         $("#nav-about").attr("href", domain + "/#section-about");
         $("#nav-offer").attr("href", domain + "/#section-offer");
         $("#nav-testimony").attr("href", domain + "/#section-testimoni");
-        // $("#nav-gallery").attr("href", "#section-gallery");
+        // $("#nav-gallery").attr("href", "/gallery");
         $("#nav-contact").attr("href", domain + "/#section-contact");
         $("#nav-faq").attr("href", domain + "/#section-faq");
 
         $('html, body').animate({
-            scrollTop: $("#section-gallery").offset().top
+            scrollTop: $("#section-frame").offset().top
         }, 1000);
 
         $(window).scroll(function() {
@@ -128,26 +119,14 @@
             return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
           }
           if(elementScrolled('#image-loader')) {
-            loadGallery();
+            loadFrame();
             // setTimeout(loadGallery, 700);
             switch(state) {
-              case "full":
-                fullbody();
+              case "minimalis":
+                minimalis();
                 break;
-              case "half":
-                halfbody();
-                break;
-              case "mozaik":
-                mozaik();
-                break;
-              case "vexel":
-                vexel();
-                break;
-              case "ilustrasi":
-                ilustrasi();
-                break;
-              case "kolase":
-                kolase();
+              case "mirror":
+                mirror();
                 break;
               default :
                 semua();

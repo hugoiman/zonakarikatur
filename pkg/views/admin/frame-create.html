@@ -41,11 +41,11 @@
           <section class="section">
             <div class="section-header">
               <div class="section-header-back">
-                <a href="gallery" class="btn btn-icon"
+                <a href="frame" class="btn btn-icon"
                   ><i class="fas fa-arrow-left"></i
                 ></a>
               </div>
-              <h1>Add New Photo to Gallery</h1>
+              <h1>Add New Frame</h1>
             </div>
 
             <div class="section-body">
@@ -57,26 +57,19 @@
                         <div class="form-group row mb-4">
                           <label
                             class="col-form-label text-md-right col-12 col-md-3 col-lg-3"
-                            >Category</label
+                            >Model</label
                           >
                           <div class="col-sm-12 col-md-3">
                             <select
                               class="form-control selectric"
-                              id="category"
+                              id="model"
                             >
-                              <option value="karikatur-full-body"
-                                >Karikatur Full Body</option
+                              <option value="frame-mirror"
+                                >Bingkai Balik/Mirror</option
                               >
-                              <option value="karikatur-half-body"
-                                >Karikatur Half Body</option
+                              <option value="frame-minimalis"
+                                >Bingkai Minimalis</option
                               >
-                              <option value="ilustrasi-wajah"
-                                >Ilustasi Wajah</option
-                              >
-                              <option value="mozaik">Mozaik</option>
-                              <option value="sketsa">Sketsa Digital</option>
-                              <option value="vexel">Vexel Art</option>
-                              <option value="kolase">Foto Kolase</option>
                             </select>
                           </div>
                         </div>
@@ -165,11 +158,11 @@
     <!-- Add JS -->
     <script src="/assets2/js-view/domain.js"></script>
     <script src="/assets2/js-view/indexAdmin.js"></script>
-    <script src="/assets2/js-view/gallery-create.js"></script>
+    <script src="/assets2/js-view/frame-create.js"></script>
 
     <!-- Script -->
     <script>
-      $(".nav-gallery").addClass("active");
+      $(".nav-frame").addClass("active");
       $.validator.addMethod(
         "filesize",
         function (value, element, param) {
