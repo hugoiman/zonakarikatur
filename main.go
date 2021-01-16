@@ -63,6 +63,11 @@ func main() {
 	auth.HandleFunc("/api/frame/{idFrame}", controllers.DeleteFrame).Methods("DELETE")
 	auth.HandleFunc("/api/frame-file", controllers.UploadFileFrame).Methods("POST")
 
+	router.HandleFunc("/api/client", controllers.GetClients).Methods("GET")
+	auth.HandleFunc("/api/client", controllers.CreateClient).Methods("POST")
+	auth.HandleFunc("/api/client/{idClient}", controllers.DeleteClient).Methods("DELETE")
+	auth.HandleFunc("/api/client-file", controllers.UploadFileClient).Methods("POST")
+
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	router.PathPrefix("/assets2/").Handler(http.StripPrefix("/assets2/", http.FileServer(http.Dir("assets2"))))
 	router.PathPrefix("/node_modules/").Handler(http.StripPrefix("/node_modules/", http.FileServer(http.Dir("node_modules2"))))
@@ -301,6 +306,32 @@ func main() {
 	router.HandleFunc("/admin/create-frame", func(w http.ResponseWriter, r *http.Request) {
 		var tmpl = template.Must(template.ParseFiles(
 			"./pkg/views/admin/frame-create.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/admin/client", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/client.html",
+			"./pkg/views/admin/header.html",
+			"./pkg/views/admin/footer.html",
+		))
+
+		var err = tmpl.Execute(w, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	})
+
+	router.HandleFunc("/admin/create-client", func(w http.ResponseWriter, r *http.Request) {
+		var tmpl = template.Must(template.ParseFiles(
+			"./pkg/views/admin/client-create.html",
 			"./pkg/views/admin/header.html",
 			"./pkg/views/admin/footer.html",
 		))

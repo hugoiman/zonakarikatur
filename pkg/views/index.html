@@ -76,7 +76,7 @@
 
     <section class="site-section parallax" id="section-gallery">
         <div class="container">
-            <div class="row site-custom-gutters">
+            <div class="row site-custom-gutters gallery-list">
 
                 <div class="col-md-12 text-center mb-5 site-animate">
                     <h2 class="display-4">Gallery</h2>
@@ -89,6 +89,19 @@
                     class="btn btn-primary btn-sm"
                     style="font-family: 'Raleway', sans-serif;">Show more >>></a>
             </p>
+        </div>
+    </section>
+    <!-- END section -->
+
+    <section class="site-section" id="section-client">
+        <div class="container">
+            <div class="row site-custom-gutters client-list">
+
+                <div class="col-md-12 text-center mb-5 site-animate">
+                    <h2 class="display-4">Our Clients</h2>
+                </div>
+                <!-- Clients List -->
+            </div>
         </div>
     </section>
     <!-- END section -->
@@ -286,6 +299,67 @@
 
     <script src="/assets2/js/jquery.min.js"></script>
     <script>
+        function getGallerys() {
+            var galleries = "";
+
+            $.ajax({
+                url: domain + "/api/gallery",
+                type: "GET",
+                data: {
+                offset: 0,
+                limit: 12,
+                },
+                async: false,
+                success: function (resp) {
+                galleries = "";
+                $.each(resp.galleries, function (idx, value) {
+                    galleries +=
+                    '<div class="col-md-2 col-4 site-animate g' +
+                    idx +
+                    " " +
+                    value.category +
+                    '"><a href="' +
+                    value.image +
+                    '" class="site-thumbnail image-popup"><img src="' +
+                    value.image +
+                    '" class="img-fluid" alt="' +
+                    value.category +
+                    '"></a></div>';
+                });
+                },
+                error: function (error) {
+                console.log("error");
+                },
+            });
+            $(".gallery-list").append(galleries);
+        }
+
+        function getClient() {
+            var clients = "";
+            $.ajax({
+                url: domain + "/api/client",
+                type: "GET",
+                async: false,
+                success: function (resp) {
+                    $.each(resp.clients, function (idx, value) {
+                        clients +=
+                        '<div class="col-md-2 col-2 site-animate g' +
+                        idx +
+                        '"><a href="' +
+                        value.image +
+                        '" class="site-thumbnail image-popup"><img src="' +
+                        value.image +
+                        '" class="img-fluid" alt=""></a></div>';
+                    });
+                },
+                error: function (error) {
+                console.log("error");
+                },
+            });
+
+            $(".client-list").append(clients);
+        }
+
         function getFaq() {
         $.ajax({
             url: domain + "/api/faq",
@@ -329,8 +403,9 @@
             getOffer();
             getFaq();
             loadTestimony();
-            loadTestimony();
-            getGallery();
+            // loadTestimony();
+            getClient();
+            getGallerys();
 
         })
     </script>
