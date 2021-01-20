@@ -52,7 +52,6 @@
                 </div>
                 <a
                     class="carousel-control-prev"
-                    onclick="loadTestimony()"
                     href="#carouselExampleControls"
                     role="button"
                     data-slide="prev"
@@ -361,34 +360,79 @@
         }
 
         function getFaq() {
+            $.ajax({
+                url: domain + "/api/faq",
+                type: "GET",
+                success: function (resp) {
+                    $.each(resp.faqs, function (idx, value) {
+                        $("#accordion").append(
+                            '<div class="panel panel-default" style="border: 2px solid #FDA403; border-radius: 10px; margin-bottom:3px">' +
+                            '<div class="panel-heading">' +
+                            '<h4 class="panel-title">' +
+                            '<a data-toggle="collapse" data-parent="#accordion" href="#collapse'+value.idFaq+'"><h5 style="margin-left: 8px;"><i class="fas fa-caret-down" style="float: right; margin: 8px 8px 0px 0px"></i>' +
+                            value.question +
+                            "</h5></a>" +
+                            "</h4>" +
+                            "</div>" +
+                            '<div id="collapse'+value.idFaq+'" class="panel-collapse collapse in">' +
+                            '<div class="panel-body" style="margin-left: 8px;">' +
+                            value.answer +
+                            "</div>" +
+                            "</div>" +
+                            "</div>"
+                        );
+                    })
+                },
+                error: function (error) {
+                console.log("FAQ not found.");
+                },
+            });
+        }
+
+        function loadTestimony() {
+        var testimonies = "";
+        var content = "";
+
         $.ajax({
-            url: domain + "/api/faq",
+            url: domain + "/api/testimony",
             type: "GET",
+            async: false,
             success: function (resp) {
-                $.each(resp.faqs, function (idx, value) {
-                    $("#accordion").append(
-                        '<div class="panel panel-default" style="border: 2px solid #FDA403; border-radius: 10px; margin-bottom:3px">' +
-                        '<div class="panel-heading">' +
-                        '<h4 class="panel-title">' +
-                        '<a data-toggle="collapse" data-parent="#accordion" href="#collapse'+value.idFaq+'"><h5 style="margin-left: 8px;"><i class="fas fa-caret-down" style="float: right; margin: 8px 8px 0px 0px"></i>' +
-                        value.question +
-                        "</h5></a>" +
-                        "</h4>" +
-                        "</div>" +
-                        '<div id="collapse'+value.idFaq+'" class="panel-collapse collapse in">' +
-                        '<div class="panel-body" style="margin-left: 8px;">' +
-                        value.answer +
-                        "</div>" +
-                        "</div>" +
-                        "</div>"
-                    );
-                })
+                $.getScript("/assets2/js/main.js", function () {
+                    //
+                });
+
+                $.each(resp.testimonies, function (idx, value) {
+                    open_div =
+                    '<div class="carousel-item ' +
+                    (idx < 6 ? "active" : "") +
+                    '"><div class="row">';
+
+                    close_div = "</div></div>";
+
+                    content +=
+                    '<div class="col-md-2 col-4 site-animate"><a href="' +
+                    value.image +
+                    '" class="site-thumbnail image-popup"><img src="' +
+                    value.image +
+                    '" class="img-fluid"></a></div>';
+
+                    if (idx === resp.testimonies.length-1 && (idx+1) % 6 !== 0) {
+                        testimonies += open_div + content + close_div;
+                    } else if ((idx+1) % 6 === 0) {
+                        testimonies += open_div + content + close_div;
+                        content = "";
+                    } 
+                });
             },
             error: function (error) {
-            console.log("FAQ not found.");
+                console.log("error");
             },
         });
+
+        $("#testimonies").append(testimonies);
         }
+
         $(function () {
             $("#nav-about").attr("href", "#section-about");
             $("#nav-offer").attr("href", "#section-offer");

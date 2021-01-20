@@ -19,10 +19,10 @@ type Testimony struct {
 }
 
 // GetTestimonies is func
-func GetTestimonies(limit, offset int) Testimonies {
+func GetTestimonies() Testimonies {
 	con := db.Connect()
-	query := "SELECT idTestimony, image, createdAt FROM testimony ORDER BY idTestimony DESC LIMIT ?,?"
-	rows, _ := con.Query(query, limit, offset)
+	query := "SELECT idTestimony, image, createdAt FROM testimony ORDER BY idTestimony DESC"
+	rows, _ := con.Query(query)
 
 	var createdAt time.Time
 	testimony := Testimony{}

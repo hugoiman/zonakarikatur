@@ -19,10 +19,10 @@ import (
 
 // GetTestimonies is func
 func GetTestimonies(w http.ResponseWriter, r *http.Request) {
-	offset, _ := strconv.Atoi(r.FormValue("offset"))
-	limit, _ := strconv.Atoi(r.FormValue("limit"))
+	// offset, _ := strconv.Atoi(r.FormValue("offset"))
+	// limit, _ := strconv.Atoi(r.FormValue("limit"))
 
-	data := models.GetTestimonies(offset, limit)
+	data := models.GetTestimonies()
 	message, err := json.Marshal(data)
 
 	if err != nil {

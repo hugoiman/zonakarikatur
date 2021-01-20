@@ -155,47 +155,6 @@ function getPromo() {
   $("#promo_list").append(promo_list);
 }
 
-var flagTestimony = 0;
-function loadTestimony() {
-  var testimonies = "";
-  var content = "";
-  open_div =
-    '<div class="carousel-item ' +
-    (flagTestimony === 0 ? " active" : "") +
-    '"><div class="row">';
-
-  close_div = "</div></div>";
-
-  $.ajax({
-    url: domain + "/api/testimony",
-    type: "GET",
-    data: {
-      offset: flagTestimony,
-      limit: 6,
-    },
-    async: false,
-    success: function (resp) {
-      $.getScript("/assets2/js/main.js", function () {
-        //
-      });
-      $.each(resp.testimonies, function (idx, value) {
-        content +=
-          '<div class="col-md-2 col-4 site-animate"><a href="' +
-          value.image +
-          '" class="site-thumbnail image-popup"><img src="' +
-          value.image +
-          '" class="img-fluid"></a></div>';
-      });
-    },
-    error: function (error) {
-      console.log("error");
-    },
-  });
-  testimonies = open_div + content + close_div;
-  $("#testimonies").append(testimonies);
-  flagTestimony += 6;
-}
-
 var flagGallery = 0;
 function loadGallery() {
   $.ajax({
