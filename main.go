@@ -348,4 +348,5 @@ func main() {
 
 	fmt.Println("Server running at :", port)
 	log.Fatal(http.ListenAndServe(":"+port, handlers.CORS(origins)(router)))
+	// tes
 }
